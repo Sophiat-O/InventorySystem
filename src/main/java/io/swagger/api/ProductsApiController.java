@@ -29,14 +29,14 @@ public class ProductsApiController<products> implements ProductsApi {
     private static final Logger log = LoggerFactory.getLogger(ProductsApiController.class);
 
     @Autowired
-    ImplementProduct productService;
+    private ImplementProduct productService;
 
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
 
 
-    List<Product> products = productService.findAllProduct();
+    //List<Product> products = productService.findAllProduct();
 
 
     @org.springframework.beans.factory.annotation.Autowired
