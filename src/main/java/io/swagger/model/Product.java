@@ -55,7 +55,7 @@ public class Product   {
 
   }
 
-  public Product(Integer _productCode, String _name, Integer _qty, String _category, BigDecimal _price, Date _date,Vendor _vendors ){
+  public Product(Integer _productCode, String _name, Integer _qty, String _category, BigDecimal _price, Date _date,Integer _vendors ){
 
     this.productCode = _productCode;
     this.name = _name;
@@ -63,7 +63,7 @@ public class Product   {
     this.category = _category;
     this.price = _price;
     this.creationDate = _date;
-    this.vendors = _vendors.getId();
+    this.vendors = _vendors;
   }
 
   public Product productCode(Integer productCode) {
