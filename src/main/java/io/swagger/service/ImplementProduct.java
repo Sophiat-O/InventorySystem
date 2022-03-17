@@ -1,6 +1,7 @@
 package io.swagger.service;
 
 import io.swagger.model.Product;
+import io.swagger.model.Vendor;
 import io.swagger.service.ProductService;
 import io.swagger.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,12 @@ public class ImplementProduct implements ProductService {
     }
 
     @Override
-    public List<Product> findAllProduct() {
-        List<Product> product = new ArrayList<>();
-        System.out.println(productRepository.findAll());
-        productRepository.findAll().forEach(e -> product.add(e));
+    public List<Product> findAll() {
+        //List<Product> product = new ArrayList();
+        //System.out.println(productRepository.findAll());
+        //productRepository.findAll().forEach(e -> product.add(e));
 
-        return product;
+        return  (List<Product>) productRepository.findAll();
     }
 
     @Override
@@ -44,7 +45,8 @@ public class ImplementProduct implements ProductService {
 
     @Override
     public void updateProduct(Product p) {
-       /* Product product = productRepository.findByID(p.getProductCode());
+       Product product = productRepository.findByID(p.getProductCode());
+
         if(product.getProductCode() == p.getProductCode()){
             product.setProductCode(p.getProductCode());
             product.setName(p.getName());
@@ -53,7 +55,7 @@ public class ImplementProduct implements ProductService {
             product.setPrice(p.getPrice());
             product.setVendors(p.getVendors());
             productRepository.save(product);
-        }*/
+        }
 
     }
 

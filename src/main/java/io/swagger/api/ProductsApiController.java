@@ -1,7 +1,7 @@
 package io.swagger.api;
 
 import io.swagger.model.Product;
-import io.swagger.service.ImplementProduct;
+import io.swagger.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -29,14 +29,12 @@ public class ProductsApiController<products> implements ProductsApi {
     private static final Logger log = LoggerFactory.getLogger(ProductsApiController.class);
 
     @Autowired
-    private ImplementProduct productService;
+    private ProductService productService;
 
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
 
-
-    //List<Product> products = productService.findAllProduct();
 
 
     @org.springframework.beans.factory.annotation.Autowired
@@ -51,9 +49,9 @@ public class ProductsApiController<products> implements ProductsApi {
     }
 
     public ResponseEntity<List<Product>> productsGet() {
-       //if(products == null)
-           //return  new ResponseEntity(HttpStatus.NOT_FOUND);
-        return  new ResponseEntity(productService.findAllProduct(),HttpStatus.OK);
+       if(productService.findAll() == null)
+           return  new ResponseEntity(HttpStatus.NOT_FOUND);
+        return  new ResponseEntity(productService.findAll().toString(),HttpStatus.OK);
         /*String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

@@ -204,8 +204,8 @@ public class Product   {
     return vendors;
   }
 
-  public void setVendors(Vendor vendors) {
-    this.vendors = vendors.getId();
+  public void setVendors(Integer vendors) {
+    this.vendors = vendors;
   }
 
 

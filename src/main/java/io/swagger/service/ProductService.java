@@ -10,9 +10,11 @@ import java.util.List;
 
 public interface ProductService {
 
+
+
     Product findById(Integer productCode);
 
-    List<Product> findAllProduct();
+    List<Product> findAll();
 
     void saveProduct(Product p);
 

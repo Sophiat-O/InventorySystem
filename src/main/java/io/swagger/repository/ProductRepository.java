@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends CrudRepository<Product, Integer> {
 
 
-    /*@Query("select * from product p where p.productcode = :productCode")
-    Product findByID(@Param("productCode") Integer productCode);*/
+    @Query("select productCode from Product p where p.productCode = :productCode")
+    Product findByID(@Param("productCode") Integer productCode);
 
 }
