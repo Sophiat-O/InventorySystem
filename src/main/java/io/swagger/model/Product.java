@@ -23,11 +23,10 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-15T17:47:53.189Z[GMT]")
 
 @Entity
-@Table(name = "product")
+@Table(name = "Product")
 
 public class Product   {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   @JsonProperty("productCode")
   private Integer productCode = null;
 
@@ -49,7 +48,7 @@ public class Product   {
 
   @Type(type ="integer")
   @JsonProperty("vendors")
-  private Vendor vendors = null;
+  private Integer vendors = null;
 
   public  Product(){
 
@@ -64,7 +63,7 @@ public class Product   {
     this.category = _category;
     this.price = _price;
     this.creationDate = _date;
-    this.vendors = _vendors;
+    this.vendors = _vendors.getId();
   }
 
   public Product productCode(Integer productCode) {
@@ -188,7 +187,7 @@ public class Product   {
     this.creationDate = creationDate;
   }
 
-  public Product vendors(Vendor vendors) {
+  public Product vendors(Integer vendors) {
     this.vendors = vendors;
     return this;
   }
@@ -200,11 +199,11 @@ public class Product   {
   @Schema(description = "")
   
     @Valid
-    public Vendor getVendors() {
+    public Integer getVendors() {
     return vendors;
   }
 
-  public void setVendors(Vendor vendors) {
+  public void setVendors(Integer vendors) {
     this.vendors = vendors;
   }
 

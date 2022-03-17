@@ -28,7 +28,7 @@ import javax.validation.constraints.*;
 public class Purchase   {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  //@GeneratedValue(strategy = GenerationType.AUTO)
   @JsonProperty("id")
   private Integer id = null;
 
