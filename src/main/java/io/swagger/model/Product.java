@@ -49,7 +49,7 @@ public class Product   {
 
   @Type(type ="integer")
   @JsonProperty("vendors")
-  private Integer vendors = null;
+  private Vendor vendors = null;
 
   public  Product(){
 
@@ -64,7 +64,7 @@ public class Product   {
     this.category = _category;
     this.price = _price;
     this.creationDate = _date;
-    this.vendors = _vendors.getId();
+    this.vendors = _vendors;
   }
 
   public Product productCode(Integer productCode) {
@@ -189,7 +189,7 @@ public class Product   {
   }
 
   public Product vendors(Vendor vendors) {
-    this.vendors = vendors.getId();
+    this.vendors = vendors;
     return this;
   }
 
@@ -200,11 +200,11 @@ public class Product   {
   @Schema(description = "")
   
     @Valid
-    public Integer getVendors() {
+    public Vendor getVendors() {
     return vendors;
   }
 
-  public void setVendors(Integer vendors) {
+  public void setVendors(Vendor vendors) {
     this.vendors = vendors;
   }
 
