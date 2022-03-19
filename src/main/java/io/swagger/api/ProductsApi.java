@@ -109,7 +109,7 @@ public interface ProductsApi {
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Void> productsProductCodePut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("productCode") Product productCode, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body);
+)) @PathVariable("productCode") Integer productCode, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body);
 
 }
 

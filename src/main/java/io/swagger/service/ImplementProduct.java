@@ -24,7 +24,7 @@ public class ImplementProduct implements ProductService {
 
     @Override
     public Product findById(Integer productCode) {
-        System.out.println(productRepository.findByID(productCode));
+        //System.out.println(productRepository.findByID(productCode));
 
         return  productRepository.findByID(productCode);
     }
@@ -47,15 +47,15 @@ public class ImplementProduct implements ProductService {
     @Override
     public void updateProduct(Product p) {
 
-        /*if(findById(p.getProductCode()).getProductCode() == p.getProductCode()){
+        if(findById(p.getProductCode()).getProductCode() != null){
 
             findById(p.getProductCode()).setName(p.getName());
             findById(p.getProductCode()).setCategory(p.getCategory());
             findById(p.getProductCode()).setCreationDate(p.getCreationDate());
             findById(p.getProductCode()).setPrice(p.getPrice());
-            findById(p.getProductCode()).setVendors(p.getVendors());*/
+            findById(p.getProductCode()).setVendors(p.getVendors());
             productRepository.save(p);
-        //}
+        }
 
     }
 

@@ -83,13 +83,13 @@ public class ProductsApiController<products> implements ProductsApi {
     }
 
     public ResponseEntity<Void> productsProductCodePut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("productCode") Product productCode,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body) {
+)) @PathVariable("productCode") Integer productCode,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body) {
 
-        if(productService.findById(productCode.getProductCode()).getProductCode() != body.getProductCode() || productService.findById(productCode.getProductCode()) == null)
+        if(productService.findById(productCode).getProductCode() != body.getProductCode() || productService.findById(productCode) == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
 
         productService.updateProduct(body);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(body,HttpStatus.OK);
     }
 
 }

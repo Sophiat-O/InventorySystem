@@ -50,7 +50,7 @@ public class Product   {
   @JsonProperty("vendors")
   private Integer vendors = null;
 
-  public  Product(Product byId){
+  public  Product(){
 
 
   }
