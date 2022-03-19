@@ -92,7 +92,7 @@ public interface ProductsApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<Product> productsProductCodeGet(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("productCode") Long productCode);
+)) @PathVariable("productCode") Integer productCode);
 
 
     @Operation(summary = "Returns a product by code.", description = "", tags={  })
@@ -108,8 +108,8 @@ public interface ProductsApi {
         produces = { "application/json" }, 
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
-    ResponseEntity<Product> productsProductCodePut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("productCode") Long productCode, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body);
+    ResponseEntity<Void> productsProductCodePut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
+)) @PathVariable("productCode") Product productCode, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body);
 
 }
 

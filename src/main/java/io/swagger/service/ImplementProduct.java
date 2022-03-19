@@ -24,8 +24,9 @@ public class ImplementProduct implements ProductService {
 
     @Override
     public Product findById(Integer productCode) {
+        System.out.println(productRepository.findByID(productCode));
 
-        return null;
+        return  productRepository.findByID(productCode);
     }
 
     @Override
@@ -45,27 +46,26 @@ public class ImplementProduct implements ProductService {
 
     @Override
     public void updateProduct(Product p) {
-       Product product = productRepository.findByID(p.getProductCode());
 
-        if(product.getProductCode() == p.getProductCode()){
-            product.setProductCode(p.getProductCode());
-            product.setName(p.getName());
-            product.setCategory(p.getCategory());
-            product.setCreationDate(p.getCreationDate());
-            product.setPrice(p.getPrice());
-            product.setVendors(p.getVendors());
-            productRepository.save(product);
-        }
+        /*if(findById(p.getProductCode()).getProductCode() == p.getProductCode()){
+
+            findById(p.getProductCode()).setName(p.getName());
+            findById(p.getProductCode()).setCategory(p.getCategory());
+            findById(p.getProductCode()).setCreationDate(p.getCreationDate());
+            findById(p.getProductCode()).setPrice(p.getPrice());
+            findById(p.getProductCode()).setVendors(p.getVendors());*/
+            productRepository.save(p);
+        //}
 
     }
 
 
     @Override
     public void deletebyId(Integer productCode) {
-        /*Product delProduct = productRepository.findByID(productCode);
+        Product delProduct = findById(productCode);
         if(delProduct.getProductCode() == productCode){
             productRepository.deleteById(productCode);
-        }*/
+        }
 
     }
 

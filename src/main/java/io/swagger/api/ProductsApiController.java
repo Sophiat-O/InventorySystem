@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import io.swagger.model.Product;
 import io.swagger.service.ProductService;
+import io.swagger.repository.ProductRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -31,6 +32,9 @@ public class ProductsApiController<products> implements ProductsApi {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ProductRepository prodRep;
+
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
@@ -52,27 +56,14 @@ public class ProductsApiController<products> implements ProductsApi {
        if(productService.findAll() == null)
            return  new ResponseEntity(HttpStatus.NOT_FOUND);
         return  new ResponseEntity(productService.findAll().toString(),HttpStatus.OK);
-        /*String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Product>>(objectMapper.readValue("[ {\n  \"productCode\" : 4,\n  \"quantity\" : 12,\n  \"price\" : 12.99,\n  \"name\" : \"Wine\",\n  \"category\" : \"red wine\",\n  \"creationDate\" : \"2000-01-23\",\n  \"vendors\" : {\n    \"name\" : \"SomeNoobVendor\",\n    \"location\" : \"Toulouse\",\n    \"id\" : 4\n  }\n}, {\n  \"productCode\" : 4,\n  \"quantity\" : 12,\n  \"price\" : 12.99,\n  \"name\" : \"Wine\",\n  \"category\" : \"red wine\",\n  \"creationDate\" : \"2000-01-23\",\n  \"vendors\" : {\n    \"name\" : \"SomeNoobVendor\",\n    \"location\" : \"Toulouse\",\n    \"id\" : 4\n  }\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Product>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<List<Product>>(HttpStatus.NOT_IMPLEMENTED);*/
     }
 
     public ResponseEntity<Void> productsPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body) {
-        /*String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);*/
-//        for(int i =0; i < products.size(); i++) {
-//            if (products.get(i).getProductCode() == body.getProductCode()) {
-//                return new ResponseEntity<>(HttpStatus.CONFLICT);
-//            }
-//        }
+        for(int i =0; i < productService.findAll().size(); i++) {
+            if (productService.findAll().get(i).getProductCode() == body.getProductCode()) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+        }
         productService.saveProduct(body);
         return new ResponseEntity(body.getProductCode(),HttpStatus.CREATED);
     }
@@ -84,33 +75,21 @@ public class ProductsApiController<products> implements ProductsApi {
     }
 
     public ResponseEntity<Product> productsProductCodeGet(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("productCode") Long productCode) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Product>(objectMapper.readValue("{\n  \"productCode\" : 4,\n  \"quantity\" : 12,\n  \"price\" : 12.99,\n  \"name\" : \"Wine\",\n  \"category\" : \"red wine\",\n  \"creationDate\" : \"2000-01-23\",\n  \"vendors\" : {\n    \"name\" : \"SomeNoobVendor\",\n    \"location\" : \"Toulouse\",\n    \"id\" : 4\n  }\n}", Product.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<Product>(HttpStatus.NOT_IMPLEMENTED);
+)) @PathVariable("productCode") Integer productCode) {
+        if(productService.findById(productCode) == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        productService.findById(productCode);
+        return new ResponseEntity<Product>(productService.findById(productCode),HttpStatus.OK);
     }
 
-    public ResponseEntity<Product> productsProductCodePut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("productCode") Long productCode,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Product>(objectMapper.readValue("{\n  \"productCode\" : 4,\n  \"quantity\" : 12,\n  \"price\" : 12.99,\n  \"name\" : \"Wine\",\n  \"category\" : \"red wine\",\n  \"creationDate\" : \"2000-01-23\",\n  \"vendors\" : {\n    \"name\" : \"SomeNoobVendor\",\n    \"location\" : \"Toulouse\",\n    \"id\" : 4\n  }\n}", Product.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+    public ResponseEntity<Void> productsProductCodePut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
+)) @PathVariable("productCode") Product productCode,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body) {
 
-        return new ResponseEntity<Product>(HttpStatus.NOT_IMPLEMENTED);
+        if(productService.findById(productCode.getProductCode()).getProductCode() != body.getProductCode() || productService.findById(productCode.getProductCode()) == null)
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        productService.updateProduct(body);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

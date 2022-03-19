@@ -46,11 +46,11 @@ public class Product   {
   @JsonProperty("creationDate")
   private Date creationDate = null;
 
-  @Type(type ="integer")
+  //@Type(type ="Integer")
   @JsonProperty("vendors")
   private Integer vendors = null;
 
-  public  Product(){
+  public  Product(Product byId){
 
 
   }
