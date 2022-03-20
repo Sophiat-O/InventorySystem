@@ -1,4 +1,4 @@
-package io.swagger.service;
+package io.swagger.implement;
 
 import io.swagger.model.Product;
 import io.swagger.model.Vendor;

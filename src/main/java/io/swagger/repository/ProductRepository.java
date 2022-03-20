@@ -8,10 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
+@Repository
 public interface ProductRepository extends CrudRepository<Product, Integer> {
 
 
-    @Query("select NEW io.swagger.model.Product(p.productCode, p.name, p.quantity, p.category, p.price,p.creationDate,p.vendors) from Product p where p.productCode = :productCode")
+    @Query("select p from Product p where p.productCode = :productCode")
     Product findByID(@Param("productCode") Integer productCode);
 
 }

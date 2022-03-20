@@ -2,7 +2,6 @@ package io.swagger.api;
 
 import io.swagger.model.Product;
 import io.swagger.service.ProductService;
-import io.swagger.repository.ProductRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -20,7 +19,6 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-15T17:47:53.189Z[GMT]")
@@ -31,9 +29,6 @@ public class ProductsApiController<products> implements ProductsApi {
 
     @Autowired
     private ProductService productService;
-
-    @Autowired
-    private ProductRepository prodRep;
 
     private final ObjectMapper objectMapper;
 
