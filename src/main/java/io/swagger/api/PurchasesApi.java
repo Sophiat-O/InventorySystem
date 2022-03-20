@@ -67,7 +67,7 @@ public interface PurchasesApi {
     @RequestMapping(value = "/purchases/{id}",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> purchasesIdDelete(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id);
+)) @PathVariable("id") Integer id);
 
 
     @Operation(summary = "Returns a purchase by ID.", description = "", tags={  })
@@ -83,7 +83,7 @@ public interface PurchasesApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<Purchase> purchasesIdGet(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id);
+)) @PathVariable("id") Integer id);
 
 
     @Operation(summary = "Returns a purchase by id.", description = "", tags={  })
@@ -100,7 +100,7 @@ public interface PurchasesApi {
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Purchase> purchasesIdPut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Purchase body);
+)) @PathVariable("id") Integer id, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Purchase body);
 
 
     @Operation(summary = "Create new purchase", description = "", tags={  })

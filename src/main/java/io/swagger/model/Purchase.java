@@ -32,13 +32,13 @@ public class Purchase   {
   @JsonProperty("id")
   private Integer id = null;
 
-  @Type(type ="integer")
-  @JsonProperty("product")
-  private Product product = null;
 
-  @Type(type ="integer")
+  @JsonProperty("product")
+  private Integer product = null;
+
+
   @JsonProperty("vendor")
-  private Vendor vendor = null;
+  private Integer vendor = null;
 
   @JsonProperty("quantity")
   private Integer quantity = null;
@@ -50,7 +50,7 @@ public class Purchase   {
 
   }
 
-  public Purchase(Integer _id, Product _product, Vendor _vendor, Integer _qty, BigDecimal _price ){
+  public Purchase(Integer _id, Integer _product, Integer _vendor, Integer _qty, BigDecimal _price ){
 
     this.id = _id;
     this.product = _product;
@@ -80,7 +80,7 @@ public class Purchase   {
     this.id = id;
   }
 
-  public Purchase product(Product product) {
+  public Purchase product(Integer product) {
     this.product = product;
     return this;
   }
@@ -93,15 +93,15 @@ public class Purchase   {
       @NotNull
 
     @Valid
-    public Product getProduct() {
+    public Integer getProduct() {
     return product;
   }
 
-  public void setProduct(Product product) {
+  public void setProduct(Integer product) {
     this.product = product;
   }
 
-  public Purchase vendor(Vendor vendor) {
+  public Purchase vendor(Integer vendor) {
     this.vendor = vendor;
     return this;
   }
@@ -114,11 +114,11 @@ public class Purchase   {
       @NotNull
 
     @Valid
-    public Vendor getVendor() {
+    public Integer getVendor() {
     return vendor;
   }
 
-  public void setVendor(Vendor vendor) {
+  public void setVendor(Integer vendor) {
     this.vendor = vendor;
   }
 
