@@ -76,7 +76,7 @@ public interface ProductsApi {
     @RequestMapping(value = "/products/{productCode}",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> productsProductCodeDelete(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("productCode") Long productCode);
+)) @PathVariable("productCode") Integer productCode);
 
 
     @Operation(summary = "Returns a product by code.", description = "", tags={  })

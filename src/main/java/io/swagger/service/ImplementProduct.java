@@ -47,14 +47,15 @@ public class ImplementProduct implements ProductService {
     @Override
     public void updateProduct(Product p) {
 
-        if(findById(p.getProductCode()).getProductCode() != null){
+        Product product = findById(p.getProductCode());
+        if(product != null){
 
-            findById(p.getProductCode()).setName(p.getName());
-            findById(p.getProductCode()).setCategory(p.getCategory());
-            findById(p.getProductCode()).setCreationDate(p.getCreationDate());
-            findById(p.getProductCode()).setPrice(p.getPrice());
-            findById(p.getProductCode()).setVendors(p.getVendors());
-            productRepository.save(p);
+            product.setName(p.getName());
+            product.setCategory(p.getCategory());
+            product.setCreationDate(p.getCreationDate());
+            product.setPrice(p.getPrice());
+            product.setVendors(p.getVendors());
+            productRepository.save(product);
         }
 
     }
@@ -63,7 +64,7 @@ public class ImplementProduct implements ProductService {
     @Override
     public void deletebyId(Integer productCode) {
         Product delProduct = findById(productCode);
-        if(delProduct.getProductCode() == productCode){
+        if(delProduct.getProductCode() != null){
             productRepository.deleteById(productCode);
         }
 

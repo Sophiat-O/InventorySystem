@@ -48,8 +48,8 @@ public class ProductsApiController<products> implements ProductsApi {
     }
 
     public ResponseEntity<Void> productsDelete() {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        productService.deleteAll();
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<List<Product>> productsGet() {
@@ -69,15 +69,21 @@ public class ProductsApiController<products> implements ProductsApi {
     }
 
     public ResponseEntity<Void> productsProductCodeDelete(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("productCode") Long productCode) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+)) @PathVariable("productCode") Integer productCode) {
+
+        if(productService.findById(productCode) == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        productService.deletebyId(productCode);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     public ResponseEntity<Product> productsProductCodeGet(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
 )) @PathVariable("productCode") Integer productCode) {
+
         if(productService.findById(productCode) == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         productService.findById(productCode);
         return new ResponseEntity<Product>(productService.findById(productCode),HttpStatus.OK);
     }
