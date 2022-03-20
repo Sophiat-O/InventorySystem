@@ -1,6 +1,8 @@
 package io.swagger.api;
 
+import io.swagger.model.Product;
 import io.swagger.model.Vendor;
+import  io.swagger.service.VendorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +45,9 @@ public class VendorsApiController implements VendorsApi {
 
     private final HttpServletRequest request;
 
+    @Autowired
+    private VendorService vendorService;
+
     @org.springframework.beans.factory.annotation.Autowired
     public VendorsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
@@ -49,63 +55,52 @@ public class VendorsApiController implements VendorsApi {
     }
 
     public ResponseEntity<Void> vendorsDelete() {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        vendorService.deleteAll();
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<List<Vendor>> vendorsGet() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Vendor>>(objectMapper.readValue("[ {\n  \"name\" : \"SomeNoobVendor\",\n  \"location\" : \"Toulouse\",\n  \"id\" : 4\n}, {\n  \"name\" : \"SomeNoobVendor\",\n  \"location\" : \"Toulouse\",\n  \"id\" : 4\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Vendor>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<List<Vendor>>(HttpStatus.NOT_IMPLEMENTED);
+        if(vendorService.findAll() == null)
+            return  new ResponseEntity(HttpStatus.NOT_FOUND);
+        return  new ResponseEntity(vendorService.findAll().toString(),HttpStatus.OK);
     }
 
     public ResponseEntity<Void> vendorsIdDelete(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+)) @PathVariable("id") Integer id) {
+        if(vendorService.findById(id) == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        vendorService.deletebyId(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     public ResponseEntity<Vendor> vendorsIdGet(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Vendor>(objectMapper.readValue("{\n  \"name\" : \"SomeNoobVendor\",\n  \"location\" : \"Toulouse\",\n  \"id\" : 4\n}", Vendor.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Vendor>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+)) @PathVariable("id") Integer id) {
+        if(vendorService.findById(id) == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<Vendor>(HttpStatus.NOT_IMPLEMENTED);
+        vendorService.findById(id);
+        return new ResponseEntity<Vendor>(vendorService.findById(id),HttpStatus.OK);
     }
 
     public ResponseEntity<Vendor> vendorsIdPut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Vendor body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Vendor>(objectMapper.readValue("{\n  \"name\" : \"SomeNoobVendor\",\n  \"location\" : \"Toulouse\",\n  \"id\" : 4\n}", Vendor.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Vendor>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+)) @PathVariable("id") Integer id,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Vendor body) {
 
-        return new ResponseEntity<Vendor>(HttpStatus.NOT_IMPLEMENTED);
+        if(vendorService.findById(id).getId() != body.getId() || vendorService.findById(id) == null)
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        vendorService.updateVendor(body);
+        return new ResponseEntity<Vendor>(body,HttpStatus.OK);
     }
 
     public ResponseEntity<Void> vendorsPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Vendor body) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        for(int i =0; i < vendorService.findAll().size(); i++) {
+            if (vendorService.findAll().get(i).getId() == body.getId()) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+        }
+        vendorService.saveVendor(body);
+        return new ResponseEntity(body.getId(),HttpStatus.CREATED);
     }
 
 }

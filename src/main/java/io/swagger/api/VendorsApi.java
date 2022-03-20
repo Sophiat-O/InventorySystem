@@ -67,7 +67,7 @@ public interface VendorsApi {
     @RequestMapping(value = "/vendors/{id}",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> vendorsIdDelete(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id);
+)) @PathVariable("id") Integer id);
 
 
     @Operation(summary = "Returns a vendor by ID.", description = "", tags={  })
@@ -83,7 +83,7 @@ public interface VendorsApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<Vendor> vendorsIdGet(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id);
+)) @PathVariable("id") Integer id);
 
 
     @Operation(summary = "Returns a vendor by id.", description = "", tags={  })
@@ -100,7 +100,7 @@ public interface VendorsApi {
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Vendor> vendorsIdPut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Vendor body);
+)) @PathVariable("id") Integer id, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Vendor body);
 
 
     @Operation(summary = "Create new vendor", description = "", tags={  })
