@@ -1,11 +1,15 @@
 package io.swagger.model;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -15,8 +19,11 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-30T15:59:15.777Z[GMT]")
 
-
+@Entity
+@Table(name = "Customer")
 public class Customer   {
+
+  @Id
   @JsonProperty("id")
   private Integer id = null;
 
@@ -26,11 +33,27 @@ public class Customer   {
   @JsonProperty("email")
   private String email = null;
 
+  @Temporal(TemporalType.DATE)
   @JsonProperty("creationDate")
-  private LocalDate creationDate = null;
+  private Date creationDate = null;
 
   @JsonProperty("store")
   private Integer store = null;
+
+  public Customer(){
+
+
+  }
+
+  public Customer(Integer _id, String _name, String _email, Date _date, Integer _store ){
+
+    this.id = _id;
+    this.name = _name;
+    this.email = _email;
+    this.creationDate = _date;
+    this.store = _store;
+  }
+
 
   public Customer id(Integer id) {
     this.id = id;
@@ -91,7 +114,7 @@ public class Customer   {
     this.email = email;
   }
 
-  public Customer creationDate(LocalDate creationDate) {
+  public Customer creationDate(Date creationDate) {
     this.creationDate = creationDate;
     return this;
   }
@@ -104,11 +127,11 @@ public class Customer   {
       @NotNull
 
     @Valid
-    public LocalDate getCreationDate() {
+    public Date getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(LocalDate creationDate) {
+  public void setCreationDate(Date creationDate) {
     this.creationDate = creationDate;
   }
 

@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -7,6 +8,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -16,8 +19,11 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-30T15:59:15.777Z[GMT]")
 
-
+@Entity
+@Table(name = "Sale")
 public class Sale   {
+
+  @Id
   @JsonProperty("id")
   private Integer id = null;
 
@@ -30,11 +36,27 @@ public class Sale   {
   @JsonProperty("quantity")
   private Integer quantity = null;
 
+  @Temporal(TemporalType.DATE)
   @JsonProperty("creationDate")
-  private LocalDate creationDate = null;
+  private Date creationDate = null;
 
   @JsonProperty("price")
   private BigDecimal price = null;
+
+  public Sale(){
+
+
+  }
+
+  public Sale(Integer _id, Integer _product, Integer _customer, Integer _qty, Date _date, BigDecimal _price ){
+
+    this.id = _id;
+    this.product = _product;
+    this.customer = _customer;
+    this.quantity= _qty;
+    this.creationDate = _date;
+    this.price = _price;
+  }
 
   public Sale id(Integer id) {
     this.id = id;
@@ -116,7 +138,7 @@ public class Sale   {
     this.quantity = quantity;
   }
 
-  public Sale creationDate(LocalDate creationDate) {
+  public Sale creationDate(Date creationDate) {
     this.creationDate = creationDate;
     return this;
   }
@@ -129,11 +151,11 @@ public class Sale   {
       @NotNull
 
     @Valid
-    public LocalDate getCreationDate() {
+    public Date getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(LocalDate creationDate) {
+  public void setCreationDate(Date creationDate) {
     this.creationDate = creationDate;
   }
 
