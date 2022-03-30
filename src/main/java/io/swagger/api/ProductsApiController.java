@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-15T17:47:53.189Z[GMT]")
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false")
 @RestController
 public class ProductsApiController<products> implements ProductsApi {
 
@@ -50,7 +52,7 @@ public class ProductsApiController<products> implements ProductsApi {
     public ResponseEntity<List<Product>> productsGet() {
        if(productService.findAll() == null)
            return  new ResponseEntity(HttpStatus.NOT_FOUND);
-        return  new ResponseEntity(productService.findAll().toString(),HttpStatus.OK);
+        return  new ResponseEntity(productService.findAll(),HttpStatus.OK);
     }
 
     public ResponseEntity<Void> productsPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body) {

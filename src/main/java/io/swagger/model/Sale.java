@@ -1,20 +1,12 @@
 package io.swagger.model;
 
 import java.util.Objects;
-import java.util.Date;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.model.Customer;
-import io.swagger.model.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
-
-import org.hibernate.annotations.Type;
 import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
-
-import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -22,50 +14,27 @@ import javax.validation.constraints.*;
  * Sale
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-15T17:47:53.189Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-30T15:59:15.777Z[GMT]")
 
-@Entity
-@Table(name = "Sale")
+
 public class Sale   {
-
-  @Id
-  //@GeneratedValue(strategy = GenerationType.AUTO)
   @JsonProperty("id")
   private Integer id = null;
 
-  @Type(type ="integer")
   @JsonProperty("product")
-  private Product product = null;
+  private Integer product = null;
 
-  @Type(type ="integer")
   @JsonProperty("customer")
-  private Customer customer = null;
+  private Integer customer = null;
 
   @JsonProperty("quantity")
   private Integer quantity = null;
 
-  @Temporal(TemporalType.DATE)
   @JsonProperty("creationDate")
-  private Date creationDate = null;
+  private LocalDate creationDate = null;
 
   @JsonProperty("price")
   private BigDecimal price = null;
-
-
-  public Sale(){
-
-  }
-
-  public Sale(Integer _id, Product _product, Customer _customer, Integer _qty ,Date _date, BigDecimal _price ){
-
-    this.id = _id;
-    this.product = _product;
-    this.customer = _customer;
-    this.quantity = _qty;
-    this.creationDate = _date;
-    this.price = _price;
-
-  }
 
   public Sale id(Integer id) {
     this.id = id;
@@ -87,7 +56,7 @@ public class Sale   {
     this.id = id;
   }
 
-  public Sale product(Product product) {
+  public Sale product(Integer product) {
     this.product = product;
     return this;
   }
@@ -96,19 +65,18 @@ public class Sale   {
    * Get product
    * @return product
    **/
-  @Schema(required = true, description = "")
+  @Schema(example = "4", required = true, description = "")
       @NotNull
 
-    @Valid
-    public Product getProduct() {
+    public Integer getProduct() {
     return product;
   }
 
-  public void setProduct(Product product) {
+  public void setProduct(Integer product) {
     this.product = product;
   }
 
-  public Sale customer(Customer customer) {
+  public Sale customer(Integer customer) {
     this.customer = customer;
     return this;
   }
@@ -117,15 +85,14 @@ public class Sale   {
    * Get customer
    * @return customer
    **/
-  @Schema(required = true, description = "")
+  @Schema(example = "4", required = true, description = "")
       @NotNull
 
-    @Valid
-    public Customer getCustomer() {
+    public Integer getCustomer() {
     return customer;
   }
 
-  public void setCustomer(Customer customer) {
+  public void setCustomer(Integer customer) {
     this.customer = customer;
   }
 
@@ -149,7 +116,7 @@ public class Sale   {
     this.quantity = quantity;
   }
 
-  public Sale creationDate(Date creationDate) {
+  public Sale creationDate(LocalDate creationDate) {
     this.creationDate = creationDate;
     return this;
   }
@@ -162,11 +129,11 @@ public class Sale   {
       @NotNull
 
     @Valid
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(Date creationDate) {
+  public void setCreationDate(LocalDate creationDate) {
     this.creationDate = creationDate;
   }
 

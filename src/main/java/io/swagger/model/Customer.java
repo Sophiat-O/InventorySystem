@@ -1,18 +1,11 @@
 package io.swagger.model;
 
-import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.List;
-import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.model.Store;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.hibernate.annotations.Type;
 import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
-
-import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -20,15 +13,10 @@ import javax.validation.constraints.*;
  * Customer
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-15T17:47:53.189Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-30T15:59:15.777Z[GMT]")
 
 
-@Entity
-@Table(name = "Customer")
 public class Customer   {
-
-  @Id
-  //@GeneratedValue(strategy = GenerationType.AUTO)
   @JsonProperty("id")
   private Integer id = null;
 
@@ -38,31 +26,15 @@ public class Customer   {
   @JsonProperty("email")
   private String email = null;
 
-  @Temporal(TemporalType.DATE)
   @JsonProperty("creationDate")
-  private Date creationDate = null;
+  private LocalDate creationDate = null;
 
-  @Type( type ="integer")
   @JsonProperty("store")
-  private Store store = null;
+  private Integer store = null;
 
   public Customer id(Integer id) {
     this.id = id;
     return this;
-  }
-
-  public Customer(){
-
-  }
-
-  public Customer(Integer _id, String _name, String _email, Date _date, Store _store ){
-
-    this.id = _id;
-    this.name = _name;
-    this.email = _email;
-    this.creationDate = _date;
-    this.store = _store;
-
   }
 
   /**
@@ -119,7 +91,7 @@ public class Customer   {
     this.email = email;
   }
 
-  public Customer creationDate(Date creationDate) {
+  public Customer creationDate(LocalDate creationDate) {
     this.creationDate = creationDate;
     return this;
   }
@@ -132,15 +104,15 @@ public class Customer   {
       @NotNull
 
     @Valid
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(Date creationDate) {
+  public void setCreationDate(LocalDate creationDate) {
     this.creationDate = creationDate;
   }
 
-  public Customer store(Store store) {
+  public Customer store(Integer store) {
     this.store = store;
     return this;
   }
@@ -149,15 +121,14 @@ public class Customer   {
    * Get store
    * @return store
    **/
-  @Schema(required = true, description = "")
+  @Schema(example = "4", required = true, description = "")
       @NotNull
 
-    @Valid
-    public Store getStore() {
+    public Integer getStore() {
     return store;
   }
 
-  public void setStore(Store store) {
+  public void setStore(Integer store) {
     this.store = store;
   }
 
