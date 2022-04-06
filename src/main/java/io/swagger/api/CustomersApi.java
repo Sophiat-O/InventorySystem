@@ -67,7 +67,7 @@ public interface CustomersApi {
     @RequestMapping(value = "/customers/{id}",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> customersIdDelete(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id);
+)) @PathVariable("id") Integer id);
 
 
     @Operation(summary = "Returns a customer by ID.", description = "", tags={  })
@@ -83,7 +83,7 @@ public interface CustomersApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<Customer> customersIdGet(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id);
+)) @PathVariable("id") Integer id);
 
 
     @Operation(summary = "Returns a customer by id.", description = "", tags={  })
@@ -100,7 +100,7 @@ public interface CustomersApi {
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<Customer> customersIdPut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body);
+)) @PathVariable("id") Integer id, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body);
 
 
     @Operation(summary = "Create new customer", description = "", tags={  })

@@ -1,6 +1,8 @@
 package io.swagger.api;
 
 import io.swagger.model.Customer;
+import io.swagger.model.Product;
+import io.swagger.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +45,9 @@ public class CustomersApiController implements CustomersApi {
 
     private final HttpServletRequest request;
 
+    @Autowired
+    private CustomerService customerService;
+
     @org.springframework.beans.factory.annotation.Autowired
     public CustomersApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
@@ -49,63 +55,53 @@ public class CustomersApiController implements CustomersApi {
     }
 
     public ResponseEntity<Void> customersDelete() {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        customerService.deleteAll();
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<List<Customer>> customersGet() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Customer>>(objectMapper.readValue("[ {\n  \"name\" : \"Arthur\",\n  \"id\" : 4,\n  \"store\" : {\n    \"name\" : \"Arthur\",\n    \"location\" : \"11 rue de Limogne, 31770 Colomiers\",\n    \"id\" : 4\n  },\n  \"creationDate\" : \"2000-01-23\",\n  \"email\" : \"\"\n}, {\n  \"name\" : \"Arthur\",\n  \"id\" : 4,\n  \"store\" : {\n    \"name\" : \"Arthur\",\n    \"location\" : \"11 rue de Limogne, 31770 Colomiers\",\n    \"id\" : 4\n  },\n  \"creationDate\" : \"2000-01-23\",\n  \"email\" : \"\"\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Customer>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<List<Customer>>(HttpStatus.NOT_IMPLEMENTED);
+        if(customerService.findAll() == null)
+            return  new ResponseEntity(HttpStatus.NOT_FOUND);
+        return  new ResponseEntity(customerService.findAll(),HttpStatus.OK);
     }
 
     public ResponseEntity<Void> customersIdDelete(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+)) @PathVariable("id") Integer id) {
+        if(customerService.findById(id) == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        customerService.deletebyId(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     public ResponseEntity<Customer> customersIdGet(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Customer>(objectMapper.readValue("{\n  \"name\" : \"Arthur\",\n  \"id\" : 4,\n  \"store\" : {\n    \"name\" : \"Arthur\",\n    \"location\" : \"11 rue de Limogne, 31770 Colomiers\",\n    \"id\" : 4\n  },\n  \"creationDate\" : \"2000-01-23\",\n  \"email\" : \"\"\n}", Customer.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Customer>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+)) @PathVariable("id") Integer id) {
+        if(customerService.findById(id) == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<Customer>(HttpStatus.NOT_IMPLEMENTED);
+        customerService.findById(id);
+        return new ResponseEntity<Customer>(customerService.findById(id),HttpStatus.OK);
     }
 
     public ResponseEntity<Customer> customersIdPut(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema(allowableValues={  }, minimum="1"
-)) @PathVariable("id") Long id,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Customer>(objectMapper.readValue("{\n  \"name\" : \"Arthur\",\n  \"id\" : 4,\n  \"store\" : {\n    \"name\" : \"Arthur\",\n    \"location\" : \"11 rue de Limogne, 31770 Colomiers\",\n    \"id\" : 4\n  },\n  \"creationDate\" : \"2000-01-23\",\n  \"email\" : \"\"\n}", Customer.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Customer>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+)) @PathVariable("id") Integer id,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body) {
 
-        return new ResponseEntity<Customer>(HttpStatus.NOT_IMPLEMENTED);
+        if(customerService.findById(id).getId() != body.getId() || customerService.findById(id) == null)
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        customerService.updateCustomer(body);
+        return new ResponseEntity(body,HttpStatus.OK);
     }
 
     public ResponseEntity<Void> customersPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+
+        for(int i =0; i < customerService.findAll().size(); i++) {
+            if (customerService.findAll().get(i).getId() == body.getId()) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+        }
+        customerService.saveCustomer(body);
+        return new ResponseEntity(body.getId(),HttpStatus.CREATED);
     }
 
 }
