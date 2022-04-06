@@ -3,7 +3,9 @@ package io.swagger;
 import io.swagger.configuration.LocalDateConverter;
 import io.swagger.configuration.LocalDateTimeConverter;
 
-import io.swagger.repository.ProductRepository;
+import io.swagger.implement.ImplementPurchase;
+import io.swagger.repository.PurchaseRepository;
+import io.swagger.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -34,6 +36,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
 
     public static void main(String[] args) throws Exception {
         new SpringApplication(Swagger2SpringBoot.class).run(args);
+        //System.out.println(purchaseRepository.totalPurchase());
     }
 
     @Configuration

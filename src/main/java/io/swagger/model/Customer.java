@@ -37,21 +37,19 @@ public class Customer   {
   @JsonProperty("creationDate")
   private Date creationDate = null;
 
-  @JsonProperty("store")
-  private Integer store = null;
 
   public Customer(){
 
 
   }
 
-  public Customer(Integer _id, String _name, String _email, Date _date, Integer _store ){
+  public Customer(Integer _id, String _name, String _email, Date _date){
 
     this.id = _id;
     this.name = _name;
     this.email = _email;
     this.creationDate = _date;
-    this.store = _store;
+
   }
 
 
@@ -135,25 +133,7 @@ public class Customer   {
     this.creationDate = creationDate;
   }
 
-  public Customer store(Integer store) {
-    this.store = store;
-    return this;
-  }
 
-  /**
-   * Get store
-   * @return store
-   **/
-  @Schema(example = "4", required = true, description = "")
-      @NotNull
-
-    public Integer getStore() {
-    return store;
-  }
-
-  public void setStore(Integer store) {
-    this.store = store;
-  }
 
 
   @Override
@@ -168,13 +148,12 @@ public class Customer   {
     return Objects.equals(this.id, customer.id) &&
         Objects.equals(this.name, customer.name) &&
         Objects.equals(this.email, customer.email) &&
-        Objects.equals(this.creationDate, customer.creationDate) &&
-        Objects.equals(this.store, customer.store);
+        Objects.equals(this.creationDate, customer.creationDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, email, creationDate, store);
+    return Objects.hash(id, name, email, creationDate);
   }
 
   @Override
@@ -186,7 +165,6 @@ public class Customer   {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
-    sb.append("    store: ").append(toIndentedString(store)).append("\n");
     sb.append("}");
     return sb.toString();
   }

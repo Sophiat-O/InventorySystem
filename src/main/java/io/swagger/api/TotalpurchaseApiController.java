@@ -2,35 +2,17 @@ package io.swagger.api;
 
 import io.swagger.model.Purchase;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.service.PurchaseService;
+import io.swagger.repository.PurchaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-03-30T15:59:15.777Z[GMT]")
 @RestController
@@ -42,14 +24,21 @@ public class TotalpurchaseApiController implements TotalpurchaseApi {
 
     private final HttpServletRequest request;
 
+    @Autowired
+    private PurchaseService purchaseService;
+
+
+
     @org.springframework.beans.factory.annotation.Autowired
     public TotalpurchaseApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }
 
-    public ResponseEntity<Purchase> totalpurchaseGet() {
-        String accept = request.getHeader("Accept");
+
+
+    public ResponseEntity<BigDecimal> totalpurchaseGet() {
+        /*String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
                 return new ResponseEntity<Purchase>(objectMapper.readValue("{\n  \"product\" : 4,\n  \"quantity\" : 50,\n  \"vendor\" : 4,\n  \"price\" : 2.99,\n  \"id\" : 4\n}", Purchase.class), HttpStatus.NOT_IMPLEMENTED);
@@ -60,6 +49,11 @@ public class TotalpurchaseApiController implements TotalpurchaseApi {
         }
 
         return new ResponseEntity<Purchase>(HttpStatus.NOT_IMPLEMENTED);
+    }*/
+        if(purchaseService.totalPurchase() == null)
+            return new ResponseEntity<BigDecimal>(HttpStatus.NO_CONTENT);
+        System.out.println(purchaseService.totalPurchase());
+        return new ResponseEntity<BigDecimal>(purchaseService.totalPurchase(),HttpStatus.OK);
     }
 
 }

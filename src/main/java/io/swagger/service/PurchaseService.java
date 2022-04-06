@@ -3,6 +3,7 @@ package io.swagger.service;
 import io.swagger.model.Purchase;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface PurchaseService {
@@ -19,4 +20,8 @@ public interface PurchaseService {
     void deletebyId(Integer id);
 
     void deleteAll();
+
+    Long countPurchase();
+
+    BigDecimal totalPurchase();
 }

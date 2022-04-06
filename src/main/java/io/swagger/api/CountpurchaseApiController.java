@@ -1,6 +1,7 @@
 package io.swagger.api;
 
 import io.swagger.model.Purchase;
+import io.swagger.implement.ImplementPurchase;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,14 +44,17 @@ public class CountpurchaseApiController implements CountpurchaseApi {
 
     private final HttpServletRequest request;
 
+    @Autowired
+    private ImplementPurchase purchaseService;
+
     @org.springframework.beans.factory.annotation.Autowired
     public CountpurchaseApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }
 
-    public ResponseEntity<Purchase> countpurchaseGet() {
-        String accept = request.getHeader("Accept");
+    public ResponseEntity<Long> countpurchaseGet() {
+        /*String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
                 return new ResponseEntity<Purchase>(objectMapper.readValue("{\n  \"product\" : 4,\n  \"quantity\" : 50,\n  \"vendor\" : 4,\n  \"price\" : 2.99,\n  \"id\" : 4\n}", Purchase.class), HttpStatus.NOT_IMPLEMENTED);
@@ -59,7 +64,11 @@ public class CountpurchaseApiController implements CountpurchaseApi {
             }
         }
 
-        return new ResponseEntity<Purchase>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<Purchase>(HttpStatus.NOT_IMPLEMENTED);*/
+        System.out.println(purchaseService.countPurchase());
+        if(purchaseService.countPurchase() == null)
+            return  new ResponseEntity<Long>(HttpStatus.NOT_FOUND);
+        return  new ResponseEntity<Long>(purchaseService.countPurchase(),HttpStatus.OK);
     }
 
 }

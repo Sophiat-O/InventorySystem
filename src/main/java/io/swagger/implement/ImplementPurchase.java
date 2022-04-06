@@ -6,6 +6,7 @@ import io.swagger.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -62,5 +63,15 @@ public class ImplementPurchase implements PurchaseService {
 
         purchaseRepository.deleteAll();
 
+    }
+
+    @Override
+    public Long countPurchase() {
+        return purchaseRepository.countPurchase();
+    }
+
+    @Override
+    public BigDecimal totalPurchase() {
+        return purchaseRepository.totalPurchase();
     }
 }

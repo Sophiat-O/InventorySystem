@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -38,15 +39,15 @@ public interface TotalpurchaseApi {
 
     @Operation(summary = "Returns total purchase by value.", description = "", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "A purchase object.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Purchase.class))),
+        @ApiResponse(responseCode = "200", description = "A purchase object.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BigDecimal.class))),
         
         @ApiResponse(responseCode = "404", description = "No purchase found."),
         
         @ApiResponse(responseCode = "200", description = "Unexpected error") })
     @RequestMapping(value = "/totalpurchase/",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<Purchase> totalpurchaseGet();
+    ResponseEntity<BigDecimal> totalpurchaseGet();
 
 }
 

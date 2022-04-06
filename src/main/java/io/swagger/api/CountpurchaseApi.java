@@ -46,7 +46,7 @@ public interface CountpurchaseApi {
     @RequestMapping(value = "/countpurchase/",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Purchase> countpurchaseGet();
+    ResponseEntity<Long> countpurchaseGet();
 
 }
 
