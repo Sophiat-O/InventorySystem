@@ -1,7 +1,6 @@
 package io.swagger.implement;
 
 import io.swagger.model.Customer;
-import io.swagger.model.Product;
 import io.swagger.service.CustomerService;
 import io.swagger.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ImplementCustomer implements CustomerService {
 
     @Autowired

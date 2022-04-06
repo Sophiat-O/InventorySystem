@@ -56,6 +56,7 @@ public class ProductsApiController<products> implements ProductsApi {
     }
 
     public ResponseEntity<Void> productsPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Product body) {
+
         for(int i =0; i < productService.findAll().size(); i++) {
             if (productService.findAll().get(i).getProductCode() == body.getProductCode()) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);

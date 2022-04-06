@@ -1,15 +1,11 @@
 package io.swagger.service;
 
 import io.swagger.model.Product;
-import io.swagger.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 
 
 public interface ProductService {
-
-
 
     Product findById(Integer productCode);
 
