@@ -68,6 +68,7 @@ public class InventorySummary {
         JSONArray saleByMonth = new JSONArray();
 
         for(int i = 0; i<monthlySale.size();i++){
+
             JSONObject jsonMonthlySaleValue = new JSONObject();
             String byMonth = monthlySale.get(i);
             String[] monthValue = byMonth.split(",");
