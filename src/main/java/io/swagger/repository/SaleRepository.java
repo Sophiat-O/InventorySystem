@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.List;
 
 @Repository
 public interface SaleRepository extends CrudRepository<Sale, Integer> {
@@ -22,7 +23,7 @@ public interface SaleRepository extends CrudRepository<Sale, Integer> {
     @Query("select sum(p.price * p.quantity) as price from Sale p")
     BigDecimal totalSale();
 
-    @Query("select MONTHNAME(s.creationDate),SUM(s.price * s.quantity)"
+    @Query("select SUM(s.price * s.quantity),MONTHNAME(s.creationDate)"
             + "from Sale s group by MONTHNAME(s.creationDate) order by MONTHNAME(s.creationDate) DESC")
-    Map<String,BigDecimal> monthSale();
+    List<String> monthSale();
 }

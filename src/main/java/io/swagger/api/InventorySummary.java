@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false")
@@ -59,9 +62,26 @@ public class InventorySummary {
 
     @RequestMapping(value = "/monthlysale", method = RequestMethod.GET)
     public JSONArray getMonthlySale() {
-        Map<String, BigDecimal> monthlySale = saleService.monthlySale();
+
+        List<String> monthlySale = saleService.monthlySale();
+
         JSONArray saleByMonth = new JSONArray();
-        saleByMonth.add(monthlySale);
+
+        for(int i = 0; i<monthlySale.size();i++){
+            JSONObject jsonMonthlySaleValue = new JSONObject();
+            String byMonth = monthlySale.get(i);
+            String[] monthValue = byMonth.split(",");
+
+            Double monthlySaleValue = Double.parseDouble(monthValue[0]);
+            String monthName = monthValue[1];
+            jsonMonthlySaleValue.put("Month", monthName);
+            jsonMonthlySaleValue.put("Total",monthlySaleValue);
+
+            saleByMonth.add(jsonMonthlySaleValue);
+            System.out.println(saleByMonth);
+
+        }
+
         return saleByMonth;
     }
 

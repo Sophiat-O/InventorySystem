@@ -75,7 +75,7 @@ public class ImplementSale implements SaleService {
     }
 
     @Override
-    public Map<String, BigDecimal> monthlySale() {
+    public List<String> monthlySale() {
         return saleRepository.monthSale();
     }
 }

@@ -25,6 +25,6 @@ public interface SaleService {
 
     BigDecimal totalSale();
 
-    Map<String, BigDecimal> monthlySale();
+    List<String> monthlySale();
 
 }
