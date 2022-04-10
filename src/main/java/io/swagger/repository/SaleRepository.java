@@ -23,7 +23,7 @@ public interface SaleRepository extends CrudRepository<Sale, Integer> {
     @Query("select sum(p.price * p.quantity) as price from Sale p")
     BigDecimal totalSale();
 
-    @Query("select SUM(s.price * s.quantity),MONTHNAME(s.creationDate)"
-            + "from Sale s group by MONTHNAME(s.creationDate) order by MONTHNAME(s.creationDate) DESC")
+    @Query("select SUM(s.price * s.quantity),DATE_FORMAT(s.creationDate,'%b')"
+            + "from Sale s group by DATE_FORMAT(s.creationDate,'%b')")
     List<String> monthSale();
 }

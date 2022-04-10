@@ -79,7 +79,7 @@ public class InventorySummary {
             jsonMonthlySaleValue.put("Total",monthlySaleValue);
 
             saleByMonth.add(jsonMonthlySaleValue);
-            System.out.println(saleByMonth);
+
 
         }
 
