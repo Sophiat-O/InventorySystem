@@ -27,4 +27,6 @@ public interface SaleService {
 
     List<String> monthlySale();
 
+    List<String> topProduct();
+
 }

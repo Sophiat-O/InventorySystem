@@ -78,4 +78,9 @@ public class ImplementSale implements SaleService {
     public List<String> monthlySale() {
         return saleRepository.monthSale();
     }
+
+    @Override
+    public List<String> topProduct() {
+        return saleRepository.topProduct();
+    }
 }

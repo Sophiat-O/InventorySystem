@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.util.Map;
 import java.util.List;
 
 @Repository
@@ -26,4 +25,10 @@ public interface SaleRepository extends CrudRepository<Sale, Integer> {
     @Query("select SUM(s.price * s.quantity),DATE_FORMAT(s.creationDate,'%b')"
             + "from Sale s group by DATE_FORMAT(s.creationDate,'%b')")
     List<String> monthSale();
+
+    @Query(value = "SELECT  p.name, (COUNT(s.product)/(SELECT COUNT(*) FROM Inventory.sale s2)) * 100 AS PercentageSold \n" +
+            "FROM Inventory.sale s JOIN Inventory.product p ON s.product = p.product_code \n" +
+            "GROUP BY p.name \n" +
+            "ORDER BY PercentageSold DESC", nativeQuery = true)
+    List<String> topProduct();
 }

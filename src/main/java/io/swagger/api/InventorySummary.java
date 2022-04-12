@@ -75,8 +75,8 @@ public class InventorySummary {
 
             Double monthlySaleValue = Double.parseDouble(monthValue[0]);
             String monthName = monthValue[1];
-            jsonMonthlySaleValue.put("Month", monthName);
-            jsonMonthlySaleValue.put("Total",monthlySaleValue);
+            jsonMonthlySaleValue.put("month", monthName);
+            jsonMonthlySaleValue.put("total",monthlySaleValue);
 
             saleByMonth.add(jsonMonthlySaleValue);
 
@@ -84,6 +84,32 @@ public class InventorySummary {
         }
 
         return saleByMonth;
+    }
+
+    @RequestMapping(value = "/topproduct", method = RequestMethod.GET)
+    public JSONArray getTopProduct() {
+
+        List<String> topProducts = saleService.topProduct();
+
+        JSONArray topProduct = new JSONArray();
+
+        for(int i = 0; i< topProducts.size();i++){
+
+            JSONObject jsonTopProduct = new JSONObject();
+            String productSales = topProducts.get(i);
+            String[] productSale = productSales.split(",");
+
+            Double percentage = Double.parseDouble(productSale[1]);
+            String productName = productSale[0];
+            jsonTopProduct.put("product", productName);
+            jsonTopProduct.put("percentage",percentage);
+
+            topProduct.add(jsonTopProduct);
+
+
+        }
+
+        return topProduct;
     }
 
 }
